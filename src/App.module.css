@@ -1,0 +1,9 @@
+.App {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background-color: #fff;
+  font-family: 'Protest Guerrilla', sans-serif;
+}
