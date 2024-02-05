@@ -4,13 +4,14 @@ import { ContactList } from './contactList/ContactList';
 import { Filter } from './filter/Filter';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { addContact, deleteContact } from '../../redux/action';
+import { addContact, deleteContact, setFilter } from '../../redux/action';
 import css from './Contact.module.css';
+import { getFiltered } from '../../redux/selctors';
 
 export const Contact = () => {
-  const contacts = useSelector(store => store.contacts);
+  const contacts = useSelector(getFiltered);
+
   const dispatch = useDispatch();
-  const [filter, setFilter] = useState('');
 
   const isDublicate = ({ name, number }) => {
     const normalizedName = name.toLowerCase();
@@ -38,36 +39,13 @@ export const Contact = () => {
   const onDeleteContact = id => {
     dispatch(deleteContact(id));
   };
-
-  // const changeFitler = ({ target }) => setFilter(target.value);
-
-  // const getVisibleContact = () => {
-  //   if (!filter) {
-  //     return contacts;
-  //   }
-
-  //   const normalizedFilter = filter.toLowerCase();
-
-  //   const filteredBooks = contacts.filter(({ name, number }) => {
-  //     const normalizedTitle = name.toLowerCase();
-  //     const normalizedAuthor = number.toLowerCase();
-
-  //     return (
-  //       normalizedAuthor.includes(normalizedFilter) ||
-  //       normalizedTitle.includes(normalizedFilter)
-  //     );
-  //   });
-
-  //   return filteredBooks;
-  // };
-
-  // const data = getVisibleContact();
+  const changeFitler = ({ target }) => dispatch(setFilter(target.value));
   return (
     <section className={css.section}>
       <h1 className={css.title}>Phonebook</h1>
       <Form onSubmit={onAddContact}></Form>
 
-      <Filter value={filter} onChange={() => {}}></Filter>
+      <Filter onChange={changeFitler}></Filter>
       <h2 className={css.titleContacts}> Contacts</h2>
       <ContactList
         data={contacts}
