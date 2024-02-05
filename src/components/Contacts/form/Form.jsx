@@ -30,7 +30,6 @@ const Form = ({ onSubmit }) => {
 
   const nameInputId = nanoid();
   const numberInputId = nanoid();
-  const favInputId = nanoid();
   return (
     <form onSubmit={handleSubmit} className={css.form}>
       <label htmlFor={nameInputId} className={css.label}>
