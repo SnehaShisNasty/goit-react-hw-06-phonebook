@@ -27,7 +27,6 @@ const Form = () => {
     e.preventDefault();
 
     onAddContact({ ...state });
-    reset();
   };
 
   const isDublicate = ({ name, number }) => {
@@ -51,6 +50,7 @@ const Form = () => {
     }
 
     dispatch(addContact(data));
+    reset();
   };
 
   const reset = () => {
