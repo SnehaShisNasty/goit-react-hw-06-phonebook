@@ -2,10 +2,6 @@ import React from 'react';
 import Form from './form/Form';
 import { ContactList } from './contactList/ContactList';
 import { Filter } from './filter/Filter';
-import { useSelector, useDispatch } from 'react-redux';
-
-import { addContact } from '../../redux/contacts/contacts-slice';
-import { getFiltered } from '../../redux/selctors';
 
 import css from './Contact.module.css';
 export const Contact = () => {
