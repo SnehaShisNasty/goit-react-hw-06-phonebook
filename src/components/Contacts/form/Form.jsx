@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 import css from './Form.module.css';
+import { getFiltered } from '../../../redux/selctors';
+import { useSelector, useDispatch } from 'react-redux';
+import { addContact } from '../../../redux/contacts/contacts-slice';
 
 const INITIAL_STATE = {
   name: '',
   number: '',
 };
-const Form = ({ onSubmit }) => {
+const Form = () => {
   const [state, setState] = useState({ ...INITIAL_STATE });
+
+  const contacts = useSelector(getFiltered);
+  const dispatch = useDispatch();
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -20,8 +26,31 @@ const Form = ({ onSubmit }) => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    onSubmit({ ...state });
+    onAddContact({ ...state });
     reset();
+  };
+
+  const isDublicate = ({ name, number }) => {
+    const normalizedName = name.toLowerCase();
+    const normalizedNumber = number.toLowerCase();
+
+    const dublicate = contacts.find(item => {
+      const normalizedCurrentName = item.name.toLowerCase();
+      const normalizedCurrentNumber = item.number.toLowerCase();
+      return (
+        normalizedCurrentName === normalizedName ||
+        normalizedCurrentNumber === normalizedNumber
+      );
+    });
+
+    return Boolean(dublicate);
+  };
+  const onAddContact = data => {
+    if (isDublicate(data)) {
+      return alert(`Book with ${data.number} and ${data.name} already in list`);
+    }
+
+    dispatch(addContact(data));
   };
 
   const reset = () => {

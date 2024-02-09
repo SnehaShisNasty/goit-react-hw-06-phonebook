@@ -1,16 +1,21 @@
 import React from 'react';
 import css from './Filter.module.css';
+import { setFilter } from '../../../redux/filter/filter-slice';
+import { useDispatch } from 'react-redux';
 
-export const Filter = ({ value, onChange }) => (
-  <form className={css.form}>
-    <label className={css.filterLabel}>
-      Filter
-      <input
-        type="text"
-        value={value}
-        onChange={onChange}
-        className={css.filterInput}
-      />
-    </label>
-  </form>
-);
+export const Filter = () => {
+  const dispatch = useDispatch();
+  const changeFitler = ({ target }) => dispatch(setFilter(target.value));
+  return (
+    <form className={css.form}>
+      <label className={css.filterLabel}>
+        Filter
+        <input
+          type="text"
+          onChange={changeFitler}
+          className={css.filterInput}
+        />
+      </label>
+    </form>
+  );
+};
